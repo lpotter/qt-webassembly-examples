@@ -99,6 +99,11 @@
         function createCanvas(i) {
             var canvas = document.createElement("canvas");
             canvas.id = "QtCanvas" + i;
+            canvas.contentEditable = true;
+            canvas.style.outline = "0px solid transparent";
+            canvas.style.caretColor = "transparent";
+            canvas.style.cursor = "default";
+
             canvas.style.width = "100%";
             canvas.style.height = "100%";
             return canvas;

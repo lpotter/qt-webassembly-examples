@@ -43,6 +43,7 @@
 #include <QExposeEvent>
 #include <QOpenGLContext>
 #include <qmath.h>
+#include <QDebug>
 
 HelloWindow::HelloWindow()
     : QOpenGLWindow(QOpenGLWindow::NoPartialUpdate)
@@ -53,10 +54,13 @@ HelloWindow::HelloWindow()
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
     format.setStencilBufferSize(8);
+    qDebug() << Q_FUNC_INFO << __LINE__ << "format.majorVersion()" << format.majorVersion();
+    format.setMajorVersion(3);
     setFormat(format);
-    
     setGeometry(QRect(10, 10, 640, 480));
     updateColor();
+
+
 }
 
 void HelloWindow::mousePressEvent(QMouseEvent *)
@@ -108,6 +112,7 @@ void HelloWindow::initializeGL()
 
     QOpenGLShader *fshader = new QOpenGLShader(QOpenGLShader::Fragment, this);
     fshader->compileSourceCode(
+        "precision mediump float;"
         "varying mediump vec4 color;"
         "void main(void)"
         "{"
@@ -226,6 +231,10 @@ void HelloWindow::createGeometry()
 
     for (int i = 0;i < vertices.size();i++)
         vertices[i] *= 2.0f;
+
+    qDebug() << Q_FUNC_INFO << reinterpret_cast<const char *>(glGetString(0x1F03));
+
+
 }
 
 void HelloWindow::quad(qreal x1, qreal y1, qreal x2, qreal y2, qreal x3, qreal y3, qreal x4, qreal y4)

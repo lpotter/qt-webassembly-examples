@@ -1,34 +1,41 @@
 #include <QtGui>
+#include <QApplication>
+#include <QDebug>
 #ifdef HAVE_WIDGETS
 #include <QtWidgets>
 #endif
 
 #include "hellowindow.h"
 #include "rasterwindow.h"
+#include "qwidgetmainwindow.h"
 
 QWindow *createHelloOpenGLWindow()
 {
+    qDebug() << Q_FUNC_INFO << __LINE__;
     return new HelloWindow();
 }
 
 QWindow *createRasterWindow()
 {
+    qDebug() << Q_FUNC_INFO << __LINE__;
     return new RasterWindow();
 }
 
 #ifdef HAVE_WIDGETS
 QWindow *createQWidgetMainWindow()
 {
-    QWidget* mainWindow = new QMainWindow();
+    qDebug() << Q_FUNC_INFO << __LINE__;
+    QWidget* mainWindow = new QWidgetMainWIndow();
     mainWindow->winId();
     return mainWindow->windowHandle();
 }
 #endif
 
 // select window content type
-QWindow *createWindow(int screenAddress)
+QWindow *createWindow(int screenAddress )
 {
-    QWindow *window = (screenAddress% 16 == 0 ) ? createHelloOpenGLWindow() : createRasterWindow();
+    qDebug() << Q_FUNC_INFO << screenAddress << (screenAddress% 16 );
+    QWindow *window = /*(screenAddress% 16 == 0 ) ? createHelloOpenGLWindow() :*/ createQWidgetMainWindow();
     //QWindow *window = createHelloOpenGLWindow();
     //QWindow *window = createMaindow();
     //QWindow *window = createRasterWindow();
@@ -37,7 +44,7 @@ QWindow *createWindow(int screenAddress)
 
 int main(int argc, char **argv)
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     // Print info on initial screens
     qDebug() << "Screen count" << QGuiApplication::screens().size();
