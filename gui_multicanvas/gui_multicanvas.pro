@@ -13,7 +13,8 @@ HEADERS += rasterwindow.h
 SOURCES += rasterwindow.cpp
 
 # optional widgets testing
- QT += widgets
+ QT += widgets gui
+ QT += opengl
  DEFINES += HAVE_WIDGETS
 
 # copy custom html shell

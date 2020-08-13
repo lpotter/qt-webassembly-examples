@@ -11,22 +11,18 @@
 
 QWindow *createHelloOpenGLWindow()
 {
-    qDebug() << Q_FUNC_INFO << __LINE__;
     return new HelloWindow();
 }
 
 QWindow *createRasterWindow()
 {
-    qDebug() << Q_FUNC_INFO << __LINE__;
     return new RasterWindow();
 }
 
 #ifdef HAVE_WIDGETS
 QWindow *createQWidgetMainWindow()
 {
-    qDebug() << Q_FUNC_INFO << __LINE__;
     QWidget* mainWindow = new QWidgetMainWIndow();
-    mainWindow->winId();
     return mainWindow->windowHandle();
 }
 #endif
@@ -34,11 +30,12 @@ QWindow *createQWidgetMainWindow()
 // select window content type
 QWindow *createWindow(int screenAddress )
 {
-    qDebug() << Q_FUNC_INFO << screenAddress << (screenAddress% 16 );
-    QWindow *window = /*(screenAddress% 16 == 0 ) ? createHelloOpenGLWindow() :*/ createQWidgetMainWindow();
-    //QWindow *window = createHelloOpenGLWindow();
-    //QWindow *window = createMaindow();
-    //QWindow *window = createRasterWindow();
+    int screenie = (screenAddress% 12) ;
+
+    QWindow *window = (screenie == 0 ) ? createHelloOpenGLWindow() :  (screenie == 4 ) ? createQWidgetMainWindow(): createRasterWindow();
+//    QWindow *window = createHelloOpenGLWindow();
+//    QWindow *window = createMaindow();
+//    QWindow *window = createRasterWindow();
     return window;
 }
 
